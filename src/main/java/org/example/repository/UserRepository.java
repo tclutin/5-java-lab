@@ -22,7 +22,8 @@ public class UserRepository{
         UserProfile user = db.execQuery(query, set -> new UserProfile(
                 set.getString("login"),
                 set.getString("password"),
-                set.getString("email")), login);
+                set.getString("email")),
+                login);
         return user;
     }
 }
