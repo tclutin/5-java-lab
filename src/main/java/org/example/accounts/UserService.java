@@ -7,7 +7,7 @@ public class UserService {
     private UserRepository repository;
 
     public UserService() {
-        this.repository = new org.example.repository.UserRepository();
+        this.repository = new UserRepository();
     }
 
     public void AddNewUser(UserProfile user) {
