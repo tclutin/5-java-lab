@@ -1,12 +1,10 @@
 package org.example.repository;
 
-import org.example.DbContext;
-import org.example.accounts.IUserRepository;
 import org.example.accounts.UserProfile;
 
 import java.sql.*;
 
-public class UserRepository implements IUserRepository {
+public class UserRepository{
 
     private DbContext db;
 
@@ -15,38 +13,17 @@ public class UserRepository implements IUserRepository {
     }
 
     public void CreateUser(UserProfile user) {
-        try {
-            String query = "INSERT INTO users (login, password, email) VALUES (?, ?, ?)";
-            try (PreparedStatement statement = db.getConnection().prepareStatement(query)) {
-                statement.setString(1, user.getLogin());
-                statement.setString(2, user.getPass());
-                statement.setString(3, user.getEmail());
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String query = "INSERT INTO users (login, password, email) VALUES (?, ?, ?)";
+        db.execUpdate(query, user.getLogin(), user.getPass(), user.getEmail());
     }
 
     public UserProfile GetUser(String login) {
-        try {
-            String query = "SELECT * FROM users WHERE login = ?";
-            try (PreparedStatement statement = db.getConnection().prepareStatement(query)) {
-                statement.setString(1, login);
-                ResultSet set = statement.executeQuery();
-                UserProfile user = null;
-                if (set.next()) {
-                    String username = set.getString("login");
-                    String pass = set.getString("password");
-                    String email = set.getString("email");
-                    user = new UserProfile(username, pass, email);
-                }
-                set.close();
-                return user;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        String query = "SELECT * FROM users WHERE login = ?";
+        UserProfile user = db.execQuery(query, set -> new UserProfile(
+                set.getString("login"),
+                set.getString("password"),
+                set.getString("email")
+        ), login);
+        return user;
     }
 }

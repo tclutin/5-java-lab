@@ -4,10 +4,10 @@ import org.example.repository.UserRepository;
 
 public class UserService {
 
-    private IUserRepository repository;
+    private UserRepository repository;
 
     public UserService() {
-        this.repository = new UserRepository();
+        this.repository = new org.example.repository.UserRepository();
     }
 
     public void AddNewUser(UserProfile user) {
