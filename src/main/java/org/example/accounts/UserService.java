@@ -2,17 +2,14 @@ package org.example.accounts;
 
 import org.example.repository.UserRepository;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+public class UserService {
 
-public class AccountService {
+    private IUserRepository repository;
 
-    private UserRepository repository;
-
-    public AccountService() {
+    public UserService() {
         this.repository = new UserRepository();
     }
+
     public void AddNewUser(UserProfile user) {
         repository.CreateUser(user);
     }

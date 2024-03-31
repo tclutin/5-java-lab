@@ -1,6 +1,6 @@
 package org.example.servlets;
 
-import org.example.accounts.AccountService;
+import org.example.accounts.UserService;
 import org.example.accounts.UserProfile;
 
 import javax.servlet.ServletException;
@@ -16,14 +16,14 @@ import java.io.OutputStream;
 @WebServlet("/download")
 public class DownloadServlet extends HttpServlet {
 
-    private final AccountService accountService = new AccountService();
+    private final UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = (String)req.getSession().getAttribute("login");
         String pass = (String)req.getSession().getAttribute("pass");
 
-        UserProfile user = accountService.getUserByLogin(login);
+        UserProfile user = userService.getUserByLogin(login);
         if (user == null || !user.getPass().equals(pass)) {
             resp.setContentType("text/html;charset=utf-8");
             resp.sendRedirect(req.getContextPath());

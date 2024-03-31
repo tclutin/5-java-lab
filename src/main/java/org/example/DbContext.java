@@ -9,7 +9,8 @@ import java.sql.SQLException;
 public class DbContext {
 
     private Connection connection;
-    public void createConnection() {
+
+    private void createConnection() {
         if (connection == null) {
             try {
                 Class.forName("org.postgresql.Driver");

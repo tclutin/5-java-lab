@@ -1,11 +1,12 @@
 package org.example.repository;
 
 import org.example.DbContext;
+import org.example.accounts.IUserRepository;
 import org.example.accounts.UserProfile;
 
 import java.sql.*;
 
-public class UserRepository {
+public class UserRepository implements IUserRepository {
 
     private DbContext db;
 

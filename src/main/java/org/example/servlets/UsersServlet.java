@@ -1,6 +1,6 @@
 package org.example.servlets;
 
-import org.example.accounts.AccountService;
+import org.example.accounts.UserService;
 import org.example.accounts.UserProfile;
 
 import javax.servlet.RequestDispatcher;
@@ -17,13 +17,13 @@ import java.net.URLEncoder;
 public class UsersServlet extends HttpServlet {
 
     private final String fileManagerPath = "C:\\Users\\Lutin\\fileManager\\";
-    private final AccountService accountService = new AccountService();
+    private final UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = (String)req.getSession().getAttribute("login");
 
-        UserProfile user = accountService.getUserByLogin(login);
+        UserProfile user = userService.getUserByLogin(login);
         if (user != null) {
             String encodePath = URLEncoder.encode(fileManagerPath + login, "UTF-8");
             resp.sendRedirect(req.getContextPath() + "/files?path=" + encodePath);
@@ -46,7 +46,7 @@ public class UsersServlet extends HttpServlet {
             return;
         }
 
-        if (accountService.getUserByLogin(login) != null) {
+        if (userService.getUserByLogin(login) != null) {
             resp.setContentType("text/html;charset=utf-8");
             resp.getWriter().println("Такой пользователь уже существует");
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -54,7 +54,7 @@ public class UsersServlet extends HttpServlet {
         }
 
         UserProfile user = new UserProfile(login, pass, email);
-        accountService.AddNewUser(user);
+        userService.AddNewUser(user);
 
         req.getSession().setAttribute("login", login);
         req.getSession().setAttribute("pass", pass);
