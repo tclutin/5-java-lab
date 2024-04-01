@@ -12,12 +12,12 @@ public class UserRepository{
         this.db = new DbContext();
     }
 
-    public void CreateUser(UserProfile user) {
+    public void createUser(UserProfile user) {
         String query = "INSERT INTO users (login, password, email) VALUES (?, ?, ?)";
         db.execUpdate(query, user.getLogin(), user.getPass(), user.getEmail());
     }
 
-    public UserProfile GetUser(String login) {
+    public UserProfile getUser(String login) {
         String query = "SELECT * FROM users WHERE login = ?";
         UserProfile user = db.execQuery(query, set -> new UserProfile(
                 set.getString("login"),

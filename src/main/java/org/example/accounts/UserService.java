@@ -11,10 +11,10 @@ public class UserService {
     }
 
     public void AddNewUser(UserProfile user) {
-        repository.CreateUser(user);
+        repository.createUser(user);
     }
 
     public UserProfile getUserByLogin(String login) {
-        return repository.GetUser(login);
+        return repository.getUser(login);
     }
 }
